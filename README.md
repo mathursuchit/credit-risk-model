@@ -2,7 +2,7 @@
 
 Predicts whether a loan applicant is a good or bad credit risk using statistical feature selection and ensemble ML models.
 
-**Live demo:** *(add Streamlit Cloud URL here once deployed)*
+**Live demo:** https://mathursuchit-credit-risk-model.streamlit.app/
 
 ## Overview
 
