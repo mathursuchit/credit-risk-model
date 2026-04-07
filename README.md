@@ -45,4 +45,4 @@ Python · scikit-learn · XGBoost · pandas · Streamlit · Jupyter
 
 ## Author
 
-**Suchit Mathur** — [LinkedIn](https://linkedin.com/in/suchitmathur) | [Email](mailto:suchitmathur96@gmail.com)
+**Suchit Mathur** — [LinkedIn](https://www.linkedin.com/in/mathursuchit/) | [Email](mailto:suchitmathur96@gmail.com)
