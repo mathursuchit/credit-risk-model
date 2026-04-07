@@ -1,12 +1,13 @@
-# Credit Risk Classification
+# Credit Risk Scoring — Loan Approval Prediction
 
-Predicts whether a loan applicant is a good or bad credit risk using statistical feature selection and ensemble ML models.
+Classifies loan applicants into credit risk tiers (P1–P4) using statistical feature selection and ensemble ML models.
 
 **Live demo:** https://mathursuchit-credit-risk-model.streamlit.app/
 
 ## Overview
 
-Banks need to assess credit risk before approving loans. This project builds an end-to-end ML pipeline that:
+Banks use credit bureau data to assess loan applicants. This project builds an end-to-end ML pipeline that:
+- Merges and cleans two credit bureau datasets (51,336 applicants, 80+ features)
 - Selects statistically significant features using Chi-square, VIF, and ANOVA tests
 - Compares Random Forest, XGBoost, and Decision Tree models
 - Tunes the best model (XGBoost) with GridSearchCV
@@ -14,27 +15,29 @@ Banks need to assess credit risk before approving loans. This project builds an 
 
 ## Dataset
 
-[German Credit Data](https://www.openml.org/d/31) — 1,000 loan applicants, 20 features, binary target (good/bad credit risk).
+Credit bureau data — 51,336 loan applicants, trade line history + delinquency + demographics.
+Target: P1 (lowest risk) → P4 (highest risk)
 
 ## Results
 
-| Model | Accuracy | ROC-AUC |
-|-------|----------|---------|
-| XGBoost (tuned) | ~77% | ~0.79 |
-| Random Forest | ~75% | ~0.77 |
-| Decision Tree | ~70% | ~0.65 |
+| Model | Accuracy |
+|-------|----------|
+| XGBoost (tuned) | ~78% |
+| Random Forest | ~76% |
+| Decision Tree | ~70% |
 
 ## Feature Selection
 
 Three-step statistical approach:
 1. **Chi-square test** — filters categorical features (p ≤ 0.05)
 2. **VIF** — removes multicollinear numerical features (VIF ≤ 6)
-3. **ANOVA F-test** — confirms numerical features differ across classes
+3. **ANOVA F-test** — confirms numerical features differ across risk tiers
 
 ## Run Locally
 
 ```bash
 pip install -r requirements.txt
+# Place case_study1.xlsx and case_study2.xlsx in data/
 jupyter notebook notebook.ipynb   # train and save model
 streamlit run app.py               # launch the app
 ```
