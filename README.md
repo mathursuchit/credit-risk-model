@@ -1,51 +1,44 @@
 # Credit Risk Scoring — Loan Approval Prediction
 
-Classifies loan applicants into credit risk tiers (P1–P4) using statistical feature selection and ensemble ML models.
+Classifies loan applicants into credit risk tiers (P1–P4) using XGBoost trained on real credit bureau data.
 
 **Live demo:** https://mathursuchit-credit-risk-model.streamlit.app/
 
-## Overview
+## What it does
 
-Banks use credit bureau data to assess loan applicants. This project builds an end-to-end ML pipeline that:
-- Merges and cleans two credit bureau datasets (51,336 applicants, 80+ features)
-- Selects statistically significant features using Chi-square, VIF, and ANOVA tests
-- Compares Random Forest, XGBoost, and Decision Tree models
-- Tunes the best model (XGBoost) with GridSearchCV
-- Serves predictions through an interactive Streamlit app
+Takes applicant details (income, age, employment history, delinquency records) and predicts which risk tier they fall into — P1 (low risk) through P4 (high risk). Built to mimic how banks actually assess loan applications.
 
 ## Dataset
 
-Credit bureau data — 51,336 loan applicants, trade line history + delinquency + demographics.
-Target: P1 (lowest risk) → P4 (highest risk)
+Two credit bureau datasets merged on applicant ID — 51,336 applicants, 80+ features covering trade lines, delinquency history, and demographics.
+
+## Approach
+
+Started with 80+ raw features. Used Chi-square to filter categoricals, VIF to remove multicollinear numerics, and ANOVA to confirm the remaining features actually differ across tiers. Ended up with ~48 meaningful features.
+
+Compared Random Forest, XGBoost, and Decision Tree. XGBoost won, tuned further with GridSearchCV.
 
 ## Results
 
 | Model | Accuracy |
 |-------|----------|
-| XGBoost (tuned) | ~78% |
-| Random Forest | ~76% |
-| Decision Tree | ~70% |
+| XGBoost (tuned) | 77.6% |
+| Random Forest | 76.7% |
+| Decision Tree | 70.8% |
 
-## Feature Selection
-
-Three-step statistical approach:
-1. **Chi-square test** — filters categorical features (p ≤ 0.05)
-2. **VIF** — removes multicollinear numerical features (VIF ≤ 6)
-3. **ANOVA F-test** — confirms numerical features differ across risk tiers
-
-## Run Locally
+## Run locally
 
 ```bash
 pip install -r requirements.txt
-# Place case_study1.xlsx and case_study2.xlsx in data/
-jupyter notebook notebook.ipynb   # train and save model
-streamlit run app.py               # launch the app
+# place case_study1.xlsx and case_study2.xlsx in data/
+jupyter notebook notebook.ipynb
+streamlit run app.py
 ```
 
-## Tech Stack
+## Stack
 
-Python · scikit-learn · XGBoost · pandas · Streamlit · Jupyter
+Python · XGBoost · scikit-learn · pandas · Streamlit
 
 ## Author
 
-**Suchit Mathur** — [LinkedIn](https://www.linkedin.com/in/mathursuchit/) | [Email](mailto:suchitmathur96@gmail.com)
+Suchit Mathur — [LinkedIn](https://www.linkedin.com/in/mathursuchit/)
