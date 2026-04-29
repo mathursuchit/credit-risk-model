@@ -3,16 +3,16 @@ import pandas as pd
 import numpy as np
 import joblib
 
-st.set_page_config(page_title="Credit Risk Scorer", page_icon="🏦", layout="centered")
+st.set_page_config(page_title="Credit Risk Scorer", page_icon=None, layout="centered")
 
-st.title("🏦 Credit Risk Scorer")
+st.title("Credit Risk Scorer")
 st.markdown("Enter applicant details to predict their credit risk tier using an XGBoost model trained on 51,336 real credit bureau applications.")
 
 TIER_CONFIG = {
-    'P1': {'label': 'P1 — Low Risk',        'color': 'green',  'emoji': '🟢', 'advice': 'Strong credit profile. Approve with standard terms.'},
-    'P2': {'label': 'P2 — Moderate Risk',   'color': 'blue',   'emoji': '🔵', 'advice': 'Acceptable profile. Consider standard or slightly adjusted terms.'},
-    'P3': {'label': 'P3 — Elevated Risk',   'color': 'orange', 'emoji': '🟠', 'advice': 'Higher risk profile. Review manually before approving.'},
-    'P4': {'label': 'P4 — High Risk',       'color': 'red',    'emoji': '🔴', 'advice': 'High default risk. Recommend rejection or collateral requirement.'},
+    'P1': {'label': 'P1 — Low Risk',        'color': 'green',  'advice': 'Strong credit profile. Approve with standard terms.'},
+    'P2': {'label': 'P2 — Moderate Risk',   'color': 'blue',   'advice': 'Acceptable profile. Consider standard or slightly adjusted terms.'},
+    'P3': {'label': 'P3 — Elevated Risk',   'color': 'orange', 'advice': 'Higher risk profile. Review manually before approving.'},
+    'P4': {'label': 'P4 — High Risk',       'color': 'red',    'advice': 'High default risk. Recommend rejection or collateral requirement.'},
 }
 
 @st.cache_resource
@@ -83,7 +83,7 @@ if st.button("Predict Credit Tier", type="primary"):
     tier = TIER_CONFIG[pred_label]
 
     st.divider()
-    st.subheader(f"{tier['emoji']} {tier['label']}")
+    st.subheader(tier['label'])
     st.write(f"**Recommendation:** {tier['advice']}")
 
     st.divider()
@@ -96,9 +96,8 @@ if st.button("Predict Credit Tier", type="primary"):
 
     col1, col2, col3, col4 = st.columns(4)
     cols = [col1, col2, col3, col4]
-    emojis = ['🟢', '🔵', '🟠', '🔴']
     for i, (tier_name, row) in enumerate(prob_df.iterrows()):
-        cols[i].metric(f"{emojis[i]} {tier_name}", f"{row['Score']*100:.1f}%")
+        cols[i].metric(tier_name, f"{row['Score']*100:.1f}%")
 
     st.bar_chart(pd.Series(probabilities, index=le.classes_))
 
